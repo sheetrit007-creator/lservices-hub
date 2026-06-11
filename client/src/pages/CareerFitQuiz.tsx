@@ -552,7 +552,7 @@ export default function CareerFitQuiz() {
         .cf-textarea:focus { border-color:#00cfff !important; background:rgba(0,207,255,.05) !important; }
         .cf-progress-fill { height:100%; background:linear-gradient(90deg,#1a6bdb,#00cfff); border-radius:99px; transition:width .5s cubic-bezier(.4,0,.2,1); }
       `}</style>
-      <div style={S.container}>
+      <div className="cf-container">
         {/* Progress */}
         <div style={{ marginBottom: 36 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10, fontSize: 13, color: "#8a9ab5" }}>
@@ -573,7 +573,7 @@ export default function CareerFitQuiz() {
         )}
 
         {/* Question card */}
-        <div ref={cardRef} style={S.card}>
+        <div ref={cardRef} className="cf-card-wrap" style={{ animation: "cfFadeUp .35s ease both" }}>
           <div style={S.cardAccent} />
           <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: ".12em", textTransform: "uppercase", color: "#00cfff", marginBottom: 12 }}>
             {String(currentQ + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
@@ -688,7 +688,7 @@ export default function CareerFitQuiz() {
         .cf-drop-zone { border:2px dashed rgba(255,255,255,.15); border-radius:14px; padding:32px; text-align:center; cursor:pointer; transition:all .2s; }
         .cf-drop-zone:hover, .cf-drop-zone.dragover { border-color:#00cfff; background:rgba(0,207,255,.05); }
       `}</style>
-      <div style={{ ...S.container, animation: "cfFadeUp .5s ease both" }}>
+      <div className="cf-container" style={{ animation: "cfFadeUp .5s ease both" }}>
         <div style={{ textAlign: "center", marginBottom: 40 }}>
           <div style={{ fontSize: 48, marginBottom: 16 }}>🎉</div>
           <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 42, letterSpacing: ".04em", marginBottom: 8 }}>
@@ -697,9 +697,9 @@ export default function CareerFitQuiz() {
           <p style={{ color: "#8a9ab5", fontSize: 15 }}>Enter your details so our team can review your application.</p>
         </div>
 
-        <div style={S.card}>
+        <div className="cf-card-wrap">
           <div style={S.cardAccent} />
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 16, marginBottom: 16 }}>
             {(["fname", "lname"] as const).map((field) => (
               <div key={field}>
                 <label style={S.label}>{field === "fname" ? "First Name *" : "Last Name *"}</label>
@@ -738,7 +738,7 @@ export default function CareerFitQuiz() {
             />
             {errors.phone && <div style={S.errText}>Required</div>}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 16, marginBottom: 24 }}>
             <div>
               <label style={S.label}>City</label>
               <input className="cf-input" style={S.input} value={candidateInfo.city} onChange={(e) => setCandidateInfo((p) => ({ ...p, city: e.target.value }))} placeholder="Atlanta" />

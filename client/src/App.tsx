@@ -10,6 +10,7 @@ import TechQuiz from "./pages/TechQuiz";
 import InterviewGuide from "./pages/InterviewGuide";
 import Onboarding from "./pages/Onboarding";
 import CareerFitQuiz from "./pages/CareerFitQuiz";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Router() {
   return (
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/interview-guide" component={InterviewGuide} />
       <Route path="/onboarding" component={Onboarding} />
       <Route path="/career-fit-quiz" component={CareerFitQuiz} />
+      <Route path="/admin" component={AdminDashboard} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

@@ -242,4 +242,72 @@
     color: var(--ls-orange);
     font-weight: 700;
   }
+
+  /* CareerFitQuiz mobile card & container fixes */
+  .cf-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+  .cf-card-wrap {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 20px;
+    padding: 36px 36px 32px;
+    backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+  }
+  .cf-card-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1a6bdb, #00cfff);
+    border-radius: 20px 20px 0 0;
+  }
+  @media (max-width: 639px) {
+    .cf-container { padding: 20px 12px 60px; }
+    .cf-card-wrap { padding: 20px 16px 24px; border-radius: 14px; }
+  }
+
+  /* Mobile quiz improvements */
+  @media (max-width: 639px) {
+    .quiz-option {
+      padding: 0.875rem 1rem;
+      min-height: 3.25rem;
+    }
+
+    /* Larger touch targets for radio/choice buttons */
+    .quiz-option input[type="radio"] {
+      width: 1.25rem;
+      height: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    /* Tighter section headers on mobile */
+    .section-label {
+      font-size: 0.7rem;
+    }
+
+    /* Reduce hero section padding on mobile */
+    section.relative.min-h-\[90vh\] .container {
+      padding-top: 5rem;
+      padding-bottom: 3rem;
+    }
+  }
+
+  /* Ensure tap targets are large enough on mobile */
+  @media (max-width: 639px) {
+    button, a, [role="button"] {
+      min-height: 2.5rem;
+    }
+
+    /* Card padding reduction on small screens */
+    .mobile-compact {
+      padding: 1rem;
+    }
+  }
 }

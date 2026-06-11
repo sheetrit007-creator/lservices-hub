@@ -129,7 +129,7 @@ export default function Home() {
         {/* Diagonal clip */}
         <div className="absolute bottom-0 left-0 right-0 h-16" style={{ background: BG, clipPath: "polygon(0 100%, 100% 0, 100% 100%)" }} />
 
-        <div className="container relative z-10 pt-24 pb-24">
+        <div className="container relative z-10 pt-24 pb-16 md:pb-24">
           <div className="max-w-2xl">
             {/* Location badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border mb-6" style={{ background: `${BLUE}20`, borderColor: `${BLUE}40` }}>
@@ -161,7 +161,7 @@ export default function Home() {
             </div>
 
             {/* Stats row */}
-            <div className="flex flex-wrap gap-6 mt-10 pt-8 border-t border-white/10">
+            <div className="flex flex-wrap gap-4 mt-8 pt-6 border-t border-white/10">
               {[
                 { icon: <Star className="w-4 h-4" />, label: "900+ Five-Star Reviews" },
                 { icon: <Award className="w-4 h-4" />, label: "NADCA Certified" },
