@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -29,6 +30,12 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).has("embed")) {
+      document.body.classList.add("embedded");
+    }
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">

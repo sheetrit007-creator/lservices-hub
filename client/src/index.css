@@ -273,6 +273,12 @@
     .cf-card-wrap { padding: 20px 16px 24px; border-radius: 14px; }
   }
 
+  /* Embedded (iframe) mode — hide chrome, remove top offset */
+  body.embedded .app-navbar { display: none !important; }
+  body.embedded .app-footer { display: none !important; }
+  body.embedded .pt-16 { padding-top: 0 !important; }
+  body.embedded .min-h-screen { min-height: unset; }
+
   /* Mobile quiz improvements */
   @media (max-width: 639px) {
     .quiz-option {

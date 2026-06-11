@@ -10,7 +10,7 @@ const LOGO_URL = "/img/logo.png";
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#1e293b", color: "rgba(255,255,255,0.7)" }} className="border-t border-white/10">
+    <footer style={{ background: "#1e293b", color: "rgba(255,255,255,0.7)" }} className="app-footer border-t border-white/10">
       <div className="container py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
