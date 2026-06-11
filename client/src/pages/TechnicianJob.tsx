@@ -4,7 +4,7 @@
  * Colors: #046BD2 (blue), #e7711b (orange), #1e293b (navy)
  */
 import { Link } from "wouter";
-import { ArrowLeft, MapPin, Clock, DollarSign, CheckCircle2, Award, Shield, Wrench, ChevronRight, Phone, ClipboardList } from "lucide-react";
+import { ArrowLeft, MapPin, Clock, DollarSign, CheckCircle2, Shield, Wrench, ChevronRight, Phone, ClipboardList } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -148,43 +148,6 @@ export default function TechnicianJob() {
                 </Link>
               </div>
 
-              {/* Certification Path */}
-              <div className="rounded-xl p-6 text-white" style={{ background: NAVY }}>
-                <div className="flex items-center gap-3 mb-5">
-                  <Award className="w-5 h-5" style={{ color: ORANGE }} />
-                  <h2 className="text-2xl font-bold uppercase" style={{ fontFamily: "Barlow Condensed, sans-serif" }}>Certification Path</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {[
-                    {
-                      cert: "NADCA ASCS",
-                      full: "Air Systems Cleaning Specialist",
-                      timeline: "Target: 90 days",
-                      details: "The industry's premier certification. Covers ACR standards, equipment operation, and contamination protocols. Exam fee: $385.",
-                      color: BLUE,
-                    },
-                    {
-                      cert: "IICRC",
-                      full: "Institute of Inspection, Cleaning & Restoration",
-                      timeline: "Target: 6 months",
-                      details: "Covers mold remediation, water damage, and indoor air quality. Highly valued for commercial contracts.",
-                      color: ORANGE,
-                    },
-                  ].map((cert) => (
-                    <div key={cert.cert} className="rounded-lg p-4 border border-white/10" style={{ background: "rgba(255,255,255,0.05)" }}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="px-2 py-0.5 text-white text-xs font-bold rounded uppercase" style={{ background: cert.color, fontFamily: "Barlow Condensed, sans-serif" }}>{cert.cert}</span>
-                        <span className="text-xs" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "Inter, sans-serif" }}>{cert.timeline}</span>
-                      </div>
-                      <div className="text-sm font-semibold mb-1" style={{ fontFamily: "Inter, sans-serif" }}>{cert.full}</div>
-                      <p className="text-xs" style={{ color: "rgba(255,255,255,0.6)", fontFamily: "Inter, sans-serif" }}>{cert.details}</p>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-sm mt-4" style={{ color: "rgba(255,255,255,0.6)", fontFamily: "Inter, sans-serif" }}>
-                  LServices provides study materials, exam prep support, and partial exam fee reimbursement for employees who pass within the target timeline.
-                </p>
-              </div>
             </div>
 
             {/* Sidebar */}

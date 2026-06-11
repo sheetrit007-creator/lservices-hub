@@ -60,9 +60,9 @@ const techPlan = [
       "Run a full day of residential jobs solo or as lead of a two-person crew",
       "Complete all job documentation, photos, and invoicing independently",
       "30-day performance review with supervisor: customer satisfaction scores, job completion time",
-      "Set 90-day NADCA ASCS certification target date and study schedule",
+      "Set NADCA ASCS certification target date and study schedule",
       "Register for NADCA ASCS Online Training Course or self-study materials",
-      "Discuss 6-month IICRC certification pathway and career advancement goals",
+      "Discuss IICRC certification pathway and career advancement goals",
     ],
   },
 ];
@@ -141,36 +141,6 @@ export default function Onboarding() {
               <WeekCard key={week.week} week={week} color={week.color} />
             ))}
           </div>
-
-          {/* Certification milestone */}
-          <div className="bg-[#1e293b] rounded-xl p-6 text-white mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <Award className="w-6 h-6 text-[#e7711b]" />
-                <h3 className="font-bold text-lg" style={{ fontFamily: "Barlow Condensed, sans-serif" }}>90-Day Certification Milestone</h3>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                  <div className="text-[#e7711b] font-mono text-xs mb-2">PRIMARY TARGET — 90 DAYS</div>
-                  <h4 className="font-semibold mb-2">NADCA ASCS Certification</h4>
-                  <ul className="space-y-1.5 text-sm text-white/70">
-                    <li>› Register at nadcatesting.com</li>
-                    <li>› Exam fee: $385 (member) / $485 (non-member)</li>
-                    <li>› Covers: IAQ, safety, mechanical, field experience</li>
-                    <li>› Renewal: annually by June 30</li>
-                  </ul>
-                </div>
-                <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                  <div className="text-[#e7711b] font-mono text-xs mb-2">SECONDARY TARGET — 6 MONTHS</div>
-                  <h4 className="font-semibold mb-2">IICRC Certification</h4>
-                  <ul className="space-y-1.5 text-sm text-white/70">
-                    <li>› Register at iicrc.org</li>
-                    <li>› Relevant: WRT, ASD, HVAC/R cleaning</li>
-                    <li>› Globally recognized restoration credential</li>
-                    <li>› Enhances commercial contract eligibility</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
 
           {/* Download note */}
           <div className="flex items-center justify-between p-5 bg-white rounded-xl border border-[#D1D5DB]">

@@ -104,7 +104,7 @@ const onboardingWeeks = [
   { week: "Week 1", items: ["HR paperwork, core values, uniform distribution, safety orientation", "Equipment familiarization: negative air machine, HEPA vacuums, air whips", "Field shadowing — observation only, ride along with Lead Tech"] },
   { week: "Week 2", items: ["Assisted field work: prep home, run hoses, clean registers under supervision", "Software training: Housecall Pro — clock-in, job notes, before/after photos"] },
   { week: "Week 3", items: ["Lead execution on standard residential jobs with Lead Tech observing", "Certification prep: NADCA ASCS Candidate Guide, ACR Standard chapters 1–2"] },
-  { week: "Week 4", items: ["Solo evaluation: full day of jobs as lead or crew lead", "30-day performance review: customer satisfaction, job completion time", "Set 90-day NADCA ASCS / IICRC certification target date"] },
+  { week: "Week 4", items: ["Solo evaluation: full day of jobs as lead or crew lead", "30-day performance review: customer satisfaction, job completion time", "Set NADCA ASCS / IICRC certification target date and study schedule"] },
 ];
 
 
@@ -302,46 +302,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Quiz */}
-          <div className="max-w-2xl">
-            <AnimatedSection>
-              <div className="rounded-xl p-6 text-white" style={{ background: NAVY }}>
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="w-8 h-8 rounded flex items-center justify-center" style={{ background: BLUE }}>
-                    <Wrench className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold uppercase tracking-widest" style={{ color: ORANGE, fontFamily: "Barlow Condensed, sans-serif" }}>Technician Track</div>
-                    <h3 className="font-bold text-lg uppercase" style={{ fontFamily: "Barlow Condensed, sans-serif" }}>Technical Screening Quiz</h3>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    { q: "What is the primary purpose of establishing negative pressure during duct cleaning?", a: "To pull contaminants directly into the vacuum and prevent escape into the living space." },
-                    { q: "What's the difference between cleaning ductwork vs. the full HVAC system?", a: "Duct cleaning covers supply/return channels only; full system cleaning includes coils, blower motor, and drain pan." },
-                    { q: "You find visible mold on fiberglass insulation inside the air handler. What do you do?", a: "Stop work, inform the customer — porous fiberglass cannot be cleaned of mold and must be replaced." },
-                    { q: "Explain the function of an air whip or rotary brush.", a: "They agitate and dislodge debris stuck to duct walls so the negative pressure vacuum can capture it." },
-                    { q: "What does HEPA stand for and why is it critical?", a: "High-Efficiency Particulate Air — traps 99.97% of particles ≥0.3 microns, preventing re-contamination." },
-                  ].map((item, i) => (
-                    <div key={i} className="rounded-lg p-4 border border-white/10" style={{ background: "rgba(255,255,255,0.05)" }}>
-                      <div className="text-xs font-bold mb-1.5" style={{ color: ORANGE, fontFamily: "Barlow Condensed, sans-serif" }}>Q{i + 1}</div>
-                      <p className="text-sm font-medium mb-2" style={{ fontFamily: "Inter, sans-serif" }}>{item.q}</p>
-                      <div className="text-xs border-t border-white/10 pt-2 mt-2" style={{ color: "rgba(255,255,255,0.5)", fontFamily: "Inter, sans-serif" }}>
-                        <span className="font-bold" style={{ color: BLUE }}>Expected: </span>{item.a}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <Link
-                  href="/screening/tech-quiz"
-                  className="mt-5 inline-flex items-center gap-2 w-full justify-center py-2.5 text-white font-bold rounded text-sm transition-all hover:opacity-90 uppercase tracking-wide"
-                  style={{ background: BLUE, fontFamily: "Barlow Condensed, sans-serif" }}
-                >
-                  Open Interactive Quiz <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </AnimatedSection>
-          </div>
         </div>
       </section>
 
@@ -479,15 +439,6 @@ export default function Home() {
                   </div>
                 </AnimatedSection>
               ))}
-              <AnimatedSection delay={280}>
-                <div className="ml-12 p-4 rounded-lg border" style={{ background: BG, borderColor: "#D1D5DB" }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <Award className="w-4 h-4" style={{ color: ORANGE }} />
-                    <span className="text-sm font-bold uppercase" style={{ fontFamily: "Barlow Condensed, sans-serif", color: NAVY }}>90-Day Certification Milestone</span>
-                  </div>
-                  <p className="text-xs" style={{ color: "#475569", fontFamily: "Inter, sans-serif" }}>Target: NADCA ASCS exam ($385) or IICRC certification. Company provides study materials and exam support.</p>
-                </div>
-              </AnimatedSection>
             </div>
           </div>
 
