@@ -1,5 +1,4 @@
-import nodemailer from "nodemailer";
-import type { Attachment } from "nodemailer/lib/mailer/index.js";
+import { Resend } from "resend";
 
 export interface QuizAnswer {
   questionNumber: number;
@@ -144,45 +143,32 @@ function buildEmailHtml(d: QuizSubmission): string {
 }
 
 export async function sendQuizEmail(submission: QuizSubmission): Promise<void> {
-  const user = process.env.GMAIL_USER;
-  const pass = process.env.GMAIL_APP_PASSWORD;
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error("Email not configured — set RESEND_API_KEY in environment");
 
-  if (!user || !pass) {
-    throw new Error("Email not configured — set GMAIL_USER and GMAIL_APP_PASSWORD in .env");
-  }
+  const resend = new Resend(apiKey);
+  const quizLabel = submission.quizType === "tech" ? "Tech Quiz" : "Career Fit Quiz";
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: { user, pass },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 15000,
-  });
-
-  const attachments: Attachment[] = [];
+  const attachments: { filename: string; content: Buffer }[] = [];
 
   if (submission.resumeBase64 && submission.resumeFileName) {
-    const content = submission.resumeBase64.includes(",")
-      ? submission.resumeBase64.split(",")[1]
-      : submission.resumeBase64;
-    attachments.push({ filename: submission.resumeFileName, content, encoding: "base64" });
+    const b64 = submission.resumeBase64.includes(",") ? submission.resumeBase64.split(",")[1] : submission.resumeBase64;
+    attachments.push({ filename: submission.resumeFileName, content: Buffer.from(b64, "base64") });
   }
 
   if (submission.videoBase64 && submission.videoFileName) {
-    const content = submission.videoBase64.includes(",")
-      ? submission.videoBase64.split(",")[1]
-      : submission.videoBase64;
-    attachments.push({ filename: submission.videoFileName, content, encoding: "base64" });
+    const b64 = submission.videoBase64.includes(",") ? submission.videoBase64.split(",")[1] : submission.videoBase64;
+    attachments.push({ filename: submission.videoFileName, content: Buffer.from(b64, "base64") });
   }
 
-  const quizLabel = submission.quizType === "tech" ? "Tech Quiz" : "Career Fit Quiz";
-
-  await transporter.sendMail({
-    from: `"LServices Recruitment Hub" <${user}>`,
+  const { error } = await resend.emails.send({
+    from: "LServices Recruitment Hub <onboarding@resend.dev>",
     to: "Service@LServicesTheCompany.com",
     replyTo: submission.candidateEmail,
     subject: `[${quizLabel}] New Application — ${submission.candidateName}`,
     html: buildEmailHtml(submission),
     attachments,
   });
+
+  if (error) throw new Error(error.message);
 }
