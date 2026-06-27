@@ -17,7 +17,7 @@ const navLinks = [
 ];
 
 // Real LServices logo from their website
-const LOGO_URL = "/img/logo.png";
+const LOGO_URL = "/img/logo.webp";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);

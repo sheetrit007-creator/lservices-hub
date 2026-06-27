@@ -9,7 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { toast } from "sonner";
 
-const TEAM_IMG = "/img/work/work-09.jpeg";
+const TEAM_IMG = "/img/work/work-09.webp";
 
 const techPlan = [
   {

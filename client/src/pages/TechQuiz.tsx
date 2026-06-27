@@ -2,7 +2,7 @@
  * TechQuiz — Interactive 5-question technician screening quiz
  * Brand: lservicesthecompany.com — #046BD2 blue, #e7711b orange, #1e293b navy
  */
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { Link } from "wouter";
 import {
   ArrowLeft, ArrowRight, CheckCircle2, XCircle, RotateCcw,
@@ -101,8 +101,21 @@ export default function TechQuiz() {
   const resumeInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
 
-  const q = questions[current];
-  const score = answers.filter((a, i) => a === questions[i].correct).length;
+  const shuffled = useMemo(() => questions.map((q) => {
+    const indices = q.options.map((_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    return {
+      ...q,
+      options: indices.map((i) => q.options[i]),
+      correct: indices.indexOf(q.correct),
+    };
+  }), []);
+
+  const q = shuffled[current];
+  const score = answers.filter((a, i) => a === shuffled[i].correct).length;
 
   const getScoreLabel = () => {
     if (score === 5) return { label: "Outstanding", color: "text-green-600", bg: "bg-green-50 border-green-200" };
@@ -146,7 +159,7 @@ export default function TechQuiz() {
     const isGoodFit = score >= 3;
     setGoodFit(isGoodFit);
 
-    const quizAnswers = questions.map((q, i) => ({
+    const quizAnswers = shuffled.map((q, i) => ({
       questionNumber: i + 1,
       question: q.question,
       selectedAnswer: answers[i] !== null ? q.options[answers[i] as number] : "(not answered)",
@@ -174,18 +187,19 @@ export default function TechQuiz() {
       localStorage.setItem("techQuizSubmissions", JSON.stringify(saved));
     } catch {}
 
-    if (isGoodFit) {
-      try {
-        await fetch("/api/submit-quiz", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(submission),
-        });
-      } catch {}
-    }
-
     setSendState("done");
     setView("submitted");
+
+    if (isGoodFit) {
+      const ac = new AbortController();
+      setTimeout(() => ac.abort(), 15000);
+      fetch("/api/submit-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(submission),
+        signal: ac.signal,
+      }).catch(() => {});
+    }
   }
 
   const handleReset = () => {
@@ -433,7 +447,7 @@ export default function TechQuiz() {
               <div className="p-8">
                 <h3 className="font-bold mb-4 uppercase" style={{ fontFamily: "Barlow Condensed, sans-serif", color: "#1e293b", fontSize: "1.1rem" }}>Answer Review</h3>
                 <div className="space-y-3 mb-8">
-                  {questions.map((q, i) => {
+                  {shuffled.map((q, i) => {
                     const isCorrect = answers[i] === q.correct;
                     return (
                       <div key={q.id} className={`flex items-start gap-3 p-3 rounded-lg border ${isCorrect ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}`}>

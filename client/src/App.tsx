@@ -1,17 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
-import TechnicianJob from "./pages/TechnicianJob";
-import TechQuiz from "./pages/TechQuiz";
-import InterviewGuide from "./pages/InterviewGuide";
-import Onboarding from "./pages/Onboarding";
-import CareerFitQuiz from "./pages/CareerFitQuiz";
-import AdminDashboard from "./pages/AdminDashboard";
+
+const Home = lazy(() => import("./pages/Home"));
+const TechnicianJob = lazy(() => import("./pages/TechnicianJob"));
+const TechQuiz = lazy(() => import("./pages/TechQuiz"));
+const InterviewGuide = lazy(() => import("./pages/InterviewGuide"));
+const Onboarding = lazy(() => import("./pages/Onboarding"));
+const CareerFitQuiz = lazy(() => import("./pages/CareerFitQuiz"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
 function Router() {
   return (
@@ -41,7 +42,9 @@ function App() {
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
           <Toaster />
-          <Router />
+          <Suspense fallback={null}>
+            <Router />
+          </Suspense>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

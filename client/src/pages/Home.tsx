@@ -27,8 +27,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 // Real LServices images
-const TECH_PHOTO = "/img/work/work-09.jpeg";
-const MASCOT_IMG = "/img/mascot.png";
+const TECH_PHOTO = "/img/work/work-09.webp";
+const MASCOT_IMG = "/img/mascot.webp";
 
 // Brand colors
 const BLUE = "#046BD2";
@@ -122,6 +122,8 @@ export default function Home() {
             alt="LServices technician at work"
             className="w-full h-full object-cover opacity-20"
             style={{ objectPosition: "center top" }}
+            fetchPriority="high"
+            decoding="async"
           />
           <div className="absolute inset-0" style={{ background: `linear-gradient(to right, ${NAVY_DEEP} 55%, transparent)` }} />
         </div>
@@ -178,7 +180,7 @@ export default function Home() {
 
         {/* Mascot floating */}
         <div className="absolute right-0 bottom-0 hidden lg:block" style={{ width: "380px", zIndex: 5 }}>
-          <img src={MASCOT_IMG} alt="LServices mascot" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 40px rgba(4,107,210,0.3))" }} />
+          <img src={MASCOT_IMG} alt="LServices mascot" className="w-full h-auto object-contain" style={{ filter: "drop-shadow(0 0 40px rgba(4,107,210,0.3))" }} decoding="async" />
         </div>
       </section>
 
@@ -201,7 +203,7 @@ export default function Home() {
             <AnimatedSection delay={0}>
               <div className="group bg-white rounded-xl border overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col" style={{ borderColor: "#D1D5DB" }}>
                 <div className="relative h-64 overflow-hidden">
-                  <img src={TECH_PHOTO} alt="Field Technician" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style={{ objectPosition: "center top" }} />
+                  <img src={TECH_PHOTO} alt="Field Technician" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" style={{ objectPosition: "center top" }} loading="lazy" decoding="async" />
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(15,23,42,0.85) 0%, transparent 60%)" }} />
                   <div className="absolute bottom-4 left-4">
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-white text-xs font-bold rounded uppercase tracking-wide" style={{ background: BLUE, fontFamily: "Barlow Condensed, sans-serif" }}>
@@ -397,7 +399,7 @@ export default function Home() {
           <AnimatedSection className="mb-12">
             <div className="relative rounded-2xl overflow-hidden" style={{ background: NAVY, padding: "2.5rem" }}>
               <div className="absolute top-0 right-0 opacity-10">
-                <img src={MASCOT_IMG} alt="" className="h-48 w-auto" />
+                <img src={MASCOT_IMG} alt="" className="h-48 w-auto" loading="lazy" decoding="async" />
               </div>
               <p className="text-white text-xl font-bold max-w-lg relative z-10" style={{ fontFamily: "Barlow Condensed, sans-serif", fontSize: "1.6rem" }}>
                 "Where fresh air begins — small company, so we treat each client as family."
@@ -475,16 +477,16 @@ export default function Home() {
           {/* Masonry-style photo grid */}
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-3 space-y-3">
             {[
-              { src: "/img/work/work-01.jpeg", alt: "Commercial duct prep with plastic containment" },
-              { src: "/img/work/work-02.jpeg", alt: "Technician applying antimicrobial treatment in full PPE" },
-              { src: "/img/work/work-03.jpeg", alt: "Commercial HVAC duct work at industrial facility" },
-              { src: "/img/work/work-04.jpg",  alt: "LServices technician cleaning ceiling duct in church hall" },
-              { src: "/img/work/work-05.jpeg", alt: "NADCA-certified tech cleaning vent cover on scaffolding" },
-              { src: "/img/work/work-06.jpg",  alt: "Technician inspecting ceiling duct access panel" },
-              { src: "/img/work/work-07.jpg",  alt: "Two-man crew on scissor lift at large commercial job site" },
-              { src: "/img/work/work-08.jpeg", alt: "Technician operating air compressor at construction site" },
-              { src: "/img/work/work-09.jpeg", alt: "LServices branded service van at commercial job site" },
-              { src: "/img/work/work-10.jpeg", alt: "LServices crew at large-scale commercial project" },
+              { src: "/img/work/work-01.webp", alt: "Commercial duct prep with plastic containment" },
+              { src: "/img/work/work-02.webp", alt: "Technician applying antimicrobial treatment in full PPE" },
+              { src: "/img/work/work-03.webp", alt: "Commercial HVAC duct work at industrial facility" },
+              { src: "/img/work/work-04.webp", alt: "LServices technician cleaning ceiling duct in church hall" },
+              { src: "/img/work/work-05.webp", alt: "NADCA-certified tech cleaning vent cover on scaffolding" },
+              { src: "/img/work/work-06.webp", alt: "Technician inspecting ceiling duct access panel" },
+              { src: "/img/work/work-07.webp", alt: "Two-man crew on scissor lift at large commercial job site" },
+              { src: "/img/work/work-08.webp", alt: "Technician operating air compressor at construction site" },
+              { src: "/img/work/work-09.webp", alt: "LServices branded service van at commercial job site" },
+              { src: "/img/work/work-10.webp", alt: "LServices crew at large-scale commercial project" },
             ].map((photo, i) => (
               <AnimatedSection key={photo.src} delay={i * 40} className="break-inside-avoid">
                 <div className="group relative overflow-hidden rounded-xl bg-gray-100">
@@ -493,6 +495,8 @@ export default function Home() {
                     alt={photo.alt}
                     className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     style={{ display: "block" }}
+                    loading="lazy"
+                    decoding="async"
                     onError={(e) => {
                       (e.target as HTMLImageElement).style.display = "none";
                       (e.target as HTMLImageElement).parentElement!.style.display = "none";

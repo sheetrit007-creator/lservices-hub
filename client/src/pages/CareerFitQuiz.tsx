@@ -14,7 +14,7 @@ import { ArrowLeft, Video, Upload, X } from "lucide-react";
 const GHL_WEBHOOK =
   "https://services.leadconnectorhq.com/hooks/RMaDiB6FbFkCZ5TFMxEA/webhook-trigger/5a8dafee-b534-4a5c-a673-8181f618ee72";
 
-const LOGO_URL = "/img/logo.png";
+const LOGO_URL = "/img/logo.webp";
 
 // ── QUESTIONS ─────────────────────────────────────────────
 type QuestionType = "choice" | "text" | "scenario";
@@ -401,19 +401,19 @@ export default function CareerFitQuiz() {
 
     const isGoodFit = cachedScores.totalPct >= 60;
 
-    // Only email company for good fits
-    if (isGoodFit) {
-      try {
-        await fetch("/api/submit-quiz", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(submission),
-        });
-      } catch {}
-    }
-
     setSubmitState("success");
     setTimeout(() => setPage(isGoodFit ? "result" : "result-rejected"), 1200);
+
+    if (isGoodFit) {
+      const ac = new AbortController();
+      setTimeout(() => ac.abort(), 15000);
+      fetch("/api/submit-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(submission),
+        signal: ac.signal,
+      }).catch(() => {});
+    }
   }
 
   function updateInterviewerScore(section: keyof InterviewerScores, key: string, value: number) {

@@ -5,7 +5,7 @@
 import { Link } from "wouter";
 import { Home, AlertCircle } from "lucide-react";
 
-const LOGO_URL = "/img/logo.png";
+const LOGO_URL = "/img/logo.webp";
 
 export default function NotFound() {
   return (

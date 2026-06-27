@@ -8,7 +8,7 @@ import { ArrowLeft, MapPin, Clock, DollarSign, CheckCircle2, Shield, Wrench, Che
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
-const TECH_PHOTO = "/img/work/work-09.jpeg";
+const TECH_PHOTO = "/img/work/work-09.webp";
 const BLUE = "#046BD2";
 const ORANGE = "#e7711b";
 const NAVY = "#1e293b";

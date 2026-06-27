@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Users, CheckCircle2, XCircle, Clock, Download, Trash2, Lock, Eye, EyeOff, BarChart3, Mail, Phone } from "lucide-react";
+import { Users, CheckCircle2, XCircle, Clock, Download, Trash2, Lock, Eye, EyeOff, BarChart3, Mail, Phone, Send } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -56,6 +56,37 @@ export default function AdminDashboard() {
   const [techSubs, setTechSubs] = useState<Submission[]>([]);
   const [careerSubs, setCareerSubs] = useState<Submission[]>([]);
   const [selected, setSelected] = useState<Submission | null>(null);
+  const [testState, setTestState] = useState<"idle" | "sending" | "ok" | "error">("idle");
+
+  async function sendTestEmail() {
+    setTestState("sending");
+    const ac = new AbortController();
+    const timer = setTimeout(() => ac.abort(), 15000);
+    try {
+      const res = await fetch("/api/submit-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: ac.signal,
+        body: JSON.stringify({
+          quizType: "tech",
+          candidateName: "Test Candidate",
+          candidateEmail: "test@example.com",
+          candidatePhone: "470-000-0000",
+          quizAnswers: [
+            { questionNumber: 1, question: "Test question?", selectedAnswer: "Correct answer", correctAnswer: "Correct answer", isCorrect: true },
+          ],
+          scores: { raw: "5/5", verdict: "Outstanding" },
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+      clearTimeout(timer);
+      setTestState(res.ok ? "ok" : "error");
+    } catch {
+      clearTimeout(timer);
+      setTestState("error");
+    }
+    setTimeout(() => setTestState("idle"), 4000);
+  }
 
   useEffect(() => {
     if (!authed) return;
@@ -138,7 +169,21 @@ export default function AdminDashboard() {
               <h1 className="text-white text-3xl font-bold" style={{ fontFamily: "Barlow Condensed, sans-serif" }}>Applicant Dashboard</h1>
               <p className="text-white/50 text-sm mt-1">All quiz submissions stored in this browser</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex gap-3 flex-wrap">
+              <button
+                onClick={sendTestEmail}
+                disabled={testState === "sending"}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-colors disabled:opacity-60"
+                style={{
+                  background: testState === "ok" ? "rgba(22,163,74,0.2)" : testState === "error" ? "rgba(239,68,68,0.2)" : "rgba(4,107,210,0.3)",
+                  color: testState === "ok" ? "#86efac" : testState === "error" ? "#fca5a5" : "#93c5fd",
+                }}
+              >
+                {testState === "sending" ? <><Send className="w-4 h-4 animate-pulse" /> Sending…</> :
+                 testState === "ok" ? <><CheckCircle2 className="w-4 h-4" /> Email Sent!</> :
+                 testState === "error" ? <><XCircle className="w-4 h-4" /> Failed — Check Credentials</> :
+                 <><Send className="w-4 h-4" /> Test Email</>}
+              </button>
               <button
                 onClick={() => window.print()}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-sm font-semibold rounded-lg transition-colors"

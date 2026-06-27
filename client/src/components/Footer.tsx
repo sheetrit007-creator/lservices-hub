@@ -6,7 +6,7 @@
 import { MapPin, Mail, Phone } from "lucide-react";
 import { Link } from "wouter";
 
-const LOGO_URL = "/img/logo.png";
+const LOGO_URL = "/img/logo.webp";
 
 export default function Footer() {
   return (
