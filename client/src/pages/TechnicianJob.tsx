@@ -50,7 +50,7 @@ export default function TechnicianJob() {
               <div className="bg-white rounded-xl p-6 border" style={{ borderColor: "#D1D5DB" }}>
                 <h2 className="text-2xl font-bold mb-4 uppercase" style={{ fontFamily: "Barlow Condensed, sans-serif", color: NAVY }}>About LServices</h2>
                 <p className="leading-relaxed" style={{ color: "#475569", fontFamily: "Inter, sans-serif" }}>
-                  LServices Air Duct Cleaning is a premier NADCA-certified HVAC and indoor air quality service provider in the Atlanta metro area. With over 900 five-star reviews, we pride ourselves on delivering professional, high-standard technical services to residential and commercial clients. We treat every client as family — and we build our team the same way.
+                  LServices Air Duct Cleaning is a premier NADCA-certified HVAC and indoor air quality service provider in the Atlanta metro area. With over 1,000 five-star reviews, we pride ourselves on delivering professional, high-standard technical services to residential and commercial clients. We treat every client as family — and we build our team the same way.
                 </p>
               </div>
 

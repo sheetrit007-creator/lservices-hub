@@ -165,7 +165,7 @@ export default function Home() {
             {/* Stats row */}
             <div className="flex flex-wrap gap-4 mt-8 pt-6 border-t border-white/10">
               {[
-                { icon: <Star className="w-4 h-4" />, label: "900+ Five-Star Reviews" },
+                { icon: <Star className="w-4 h-4" />, label: "1,000+ Five-Star Reviews" },
                 { icon: <Award className="w-4 h-4" />, label: "NADCA Certified" },
                 { icon: <Shield className="w-4 h-4" />, label: "Fully Insured" },
               ].map((stat) => (
@@ -264,9 +264,9 @@ export default function Home() {
                   { name: "Facebook Trade Groups", type: "Local" },
                   { name: "Glassdoor", type: "General" },
                 ].map((p) => (
-                  <div key={p.name} className="rounded-lg p-3 border border-white/10" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <div key={p.name} className="rounded-lg p-3 border border-white/10 overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
                     <div className="text-xs font-bold uppercase tracking-wider mb-1" style={{ color: BLUE, fontFamily: "Barlow Condensed, sans-serif" }}>{p.type}</div>
-                    <div className="text-sm font-medium" style={{ fontFamily: "Inter, sans-serif" }}>{p.name}</div>
+                    <div className="text-xs sm:text-sm font-medium break-words" style={{ fontFamily: "Inter, sans-serif" }}>{p.name}</div>
                   </div>
                 ))}
               </div>
