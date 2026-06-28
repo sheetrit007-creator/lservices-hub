@@ -163,7 +163,7 @@ export async function sendQuizEmail(submission: QuizSubmission): Promise<void> {
 
   const { error } = await resend.emails.send({
     from: "LServices Recruitment Hub <onboarding@resend.dev>",
-    to: "Service@LServicesTheCompany.com",
+    to: "lserviceshub@gmail.com",
     replyTo: submission.candidateEmail,
     subject: `[${quizLabel}] New Application — ${submission.candidateName}`,
     html: buildEmailHtml(submission),
