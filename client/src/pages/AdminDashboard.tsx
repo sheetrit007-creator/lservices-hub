@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Users, CheckCircle2, XCircle, Clock, Download, Trash2, Lock, Eye, EyeOff, BarChart3, Mail, Phone, Send } from "lucide-react";
+import { Users, CheckCircle2, XCircle, Clock, Download, Trash2, Lock, Eye, EyeOff, BarChart3, Mail, Phone, Send, RefreshCw } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -48,7 +48,7 @@ function formatDate(iso: string) {
 }
 
 export default function AdminDashboard() {
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState(() => sessionStorage.getItem("admin_authed") === "1");
   const [pw, setPw] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [pwError, setPwError] = useState(false);
@@ -57,6 +57,7 @@ export default function AdminDashboard() {
   const [careerSubs, setCareerSubs] = useState<Submission[]>([]);
   const [selected, setSelected] = useState<Submission | null>(null);
   const [testState, setTestState] = useState<"idle" | "sending" | "ok" | "error">("idle");
+  const [loading, setLoading] = useState(false);
 
   async function sendTestEmail() {
     setTestState("sending");
@@ -88,22 +89,39 @@ export default function AdminDashboard() {
     setTimeout(() => setTestState("idle"), 4000);
   }
 
+  async function loadSubmissions() {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/submissions", {
+        headers: { "x-admin-password": ADMIN_PASSWORD },
+      });
+      const data = await res.json();
+      if (data.ok) {
+        setTechSubs(data.submissions.filter((s: Submission) => s.quizType === "tech"));
+        setCareerSubs(data.submissions.filter((s: Submission) => s.quizType === "career"));
+      }
+    } catch {}
+    setLoading(false);
+  }
+
   useEffect(() => {
     if (!authed) return;
-    setTechSubs(JSON.parse(localStorage.getItem("techQuizSubmissions") || "[]"));
-    setCareerSubs(JSON.parse(localStorage.getItem("careerQuizSubmissions") || "[]"));
+    loadSubmissions();
   }, [authed]);
 
   function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    if (pw === ADMIN_PASSWORD) { setAuthed(true); setPwError(false); }
-    else { setPwError(true); }
+    if (pw === ADMIN_PASSWORD) {
+      sessionStorage.setItem("admin_authed", "1");
+      setAuthed(true);
+      setPwError(false);
+    } else {
+      setPwError(true);
+    }
   }
 
   function clearAll() {
-    if (!confirm("Delete ALL submission records from this browser? This cannot be undone.")) return;
-    localStorage.removeItem("techQuizSubmissions");
-    localStorage.removeItem("careerQuizSubmissions");
+    if (!confirm("Clear all submissions from server memory? This cannot be undone.")) return;
     setTechSubs([]);
     setCareerSubs([]);
   }
@@ -185,6 +203,13 @@ export default function AdminDashboard() {
                  <><Send className="w-4 h-4" /> Test Email</>}
               </button>
               <button
+                onClick={loadSubmissions}
+                disabled={loading}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-sm font-semibold rounded-lg transition-colors disabled:opacity-50"
+              >
+                <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} /> Refresh
+              </button>
+              <button
                 onClick={() => window.print()}
                 className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-sm font-semibold rounded-lg transition-colors"
               >
@@ -242,7 +267,7 @@ export default function AdminDashboard() {
             <div className="bg-white rounded-xl border border-[#D1D5DB] p-16 text-center">
               <Clock className="w-10 h-10 text-[#D1D5DB] mx-auto mb-3" />
               <p className="text-[#475569] font-semibold">No submissions yet</p>
-              <p className="text-[#9CA3AF] text-sm mt-1">Submissions appear here after candidates complete a quiz on this device or browser.</p>
+              <p className="text-[#9CA3AF] text-sm mt-1">Submissions appear here as candidates complete a quiz. Note: submissions reset if the server restarts — email is the permanent record.</p>
             </div>
           ) : (
             <div className="space-y-3">
