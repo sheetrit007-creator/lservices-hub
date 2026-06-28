@@ -236,6 +236,7 @@ export default function CareerFitQuiz() {
   const videoInputRef = useRef<HTMLInputElement>(null);
   const [submitState, setSubmitState] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [cachedScores, setCachedScores] = useState({ totalPct: 0, aPct: 0, bPct: 0, dPct: 0, verdict: "" });
+  const [optIn, setOptIn] = useState(false);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [interviewerScores, setInterviewerScores] = useState<InterviewerScores>({
     a: { ownership: 0, ethic: 0, growth: 0 },
@@ -330,6 +331,7 @@ export default function CareerFitQuiz() {
       phone: !candidateInfo.phone.trim(),
       resume: !resumeFile,
       video: !videoFile,
+      optIn: !optIn,
     };
     setErrors(errs);
     return !Object.values(errs).some(Boolean);
@@ -807,6 +809,20 @@ export default function CareerFitQuiz() {
             {errors.video && !videoFile && <div style={S.errText}>Intro video is required to submit</div>}
             {videoError && <div style={S.errText}>{videoError}</div>}
           </div>
+
+          {/* Opt-in consent */}
+          <div
+            onClick={() => { setOptIn((v) => !v); setErrors((e) => ({ ...e, optIn: false })); }}
+            style={{ display: "flex", alignItems: "flex-start", gap: 12, padding: "14px 16px", borderRadius: 12, cursor: "pointer", border: `1px solid ${errors.optIn ? "#ef4444" : optIn ? "#1a6bdb" : "rgba(255,255,255,0.12)"}`, background: optIn ? "rgba(26,107,219,0.12)" : "rgba(255,255,255,0.04)" }}
+          >
+            <div style={{ marginTop: 2, width: 20, height: 20, borderRadius: 5, border: `2px solid ${errors.optIn ? "#ef4444" : optIn ? "#1a6bdb" : "rgba(255,255,255,0.3)"}`, background: optIn ? "#1a6bdb" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.15s" }}>
+              {optIn && <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+            </div>
+            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.6, margin: 0, userSelect: "none" }}>
+              I agree to receive text and email communications from <strong style={{ color: "white" }}>LServices LLC</strong> regarding my application and employment opportunities. Message & data rates may apply. Reply STOP to opt out at any time.
+            </p>
+          </div>
+          {errors.optIn && <p style={{ fontSize: 12, color: "#f87171", marginTop: -8 }}>You must agree to continue</p>}
 
           {/* Submit */}
           <button

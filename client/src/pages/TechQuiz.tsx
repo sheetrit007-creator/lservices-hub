@@ -89,6 +89,7 @@ export default function TechQuiz() {
 
   // Capture step
   const [info, setInfo] = useState({ fname: "", lname: "", email: "", phone: "" });
+  const [optIn, setOptIn] = useState(false);
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeBase64, setResumeBase64] = useState("");
@@ -147,6 +148,7 @@ export default function TechQuiz() {
       phone: !info.phone.trim(),
       resume: !resumeFile,
       video: !videoFile,
+      optIn: !optIn,
     };
     setErrors(e);
     return !Object.values(e).some(Boolean);
@@ -298,7 +300,7 @@ export default function TechQuiz() {
                 Almost There
               </h1>
               <p className="text-white/60 text-sm mt-1">
-                Your score: <strong className="text-[#e7711b]">{score}/{questions.length}</strong> · {getScoreLabel().label}
+                Your score: <strong className="text-[#e7711b]">{score}/{shuffled.length}</strong> · {getScoreLabel().label}
               </p>
             </div>
           </div>
@@ -413,6 +415,22 @@ export default function TechQuiz() {
               {videoError && <p className={errCls}>{videoError}</p>}
             </div>
 
+            {/* Opt-in consent */}
+            <div
+              className="flex items-start gap-3 p-4 rounded-xl border cursor-pointer"
+              style={{ borderColor: errors.optIn ? "#ef4444" : optIn ? "#046BD2" : "#D1D5DB", background: optIn ? "#EFF6FF" : "#F9FAFB" }}
+              onClick={() => { setOptIn((v) => !v); setErrors((e) => ({ ...e, optIn: false })); }}
+            >
+              <div className="mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 transition-colors"
+                style={{ borderColor: errors.optIn ? "#ef4444" : optIn ? "#046BD2" : "#9CA3AF", background: optIn ? "#046BD2" : "white" }}>
+                {optIn && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 12 12"><path d="M2 6l3 3 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+              </div>
+              <p className="text-sm text-[#334155] leading-snug select-none">
+                I agree to receive text and email communications from <strong>LServices LLC</strong> regarding my application and employment opportunities. Message & data rates may apply. Reply STOP to opt out at any time.
+              </p>
+            </div>
+            {errors.optIn && <p className="text-xs text-red-500 -mt-2">You must agree to continue</p>}
+
             <button onClick={handleFinalSubmit} disabled={sendState === "sending"}
               className="w-full py-4 text-white font-bold rounded-xl text-sm uppercase tracking-wide transition-all disabled:opacity-60"
               style={{ background: "#e7711b", fontFamily: "Barlow Condensed, sans-serif", fontSize: "1rem" }}>
@@ -438,7 +456,7 @@ export default function TechQuiz() {
                 <Award className="w-12 h-12 mx-auto mb-4" style={{ color: "#e7711b" }} />
                 <h2 className="text-white text-2xl font-bold mb-2 uppercase" style={{ fontFamily: "Barlow Condensed, sans-serif" }}>Quiz Complete</h2>
                 <div className="text-6xl font-bold my-4" style={{ fontFamily: "Barlow Condensed, sans-serif", color: "#e7711b" }}>
-                  {score}/{questions.length}
+                  {score}/{shuffled.length}
                 </div>
                 <div className={`inline-block px-4 py-1.5 rounded-full border text-sm font-semibold ${bg} ${color}`}>
                   {label}
@@ -509,7 +527,7 @@ export default function TechQuiz() {
                 style={{ background: i < current ? "#046BD2" : i === current ? "#e7711b" : "#D1D5DB" }} />
             ))}
           </div>
-          <div className="text-xs font-semibold mb-6 text-[#475569]">Question {current + 1} of {questions.length}</div>
+          <div className="text-xs font-semibold mb-6 text-[#475569]">Question {current + 1} of {shuffled.length}</div>
 
           <div className="bg-white rounded-xl border border-[#D1D5DB] p-6 mb-4">
             <div className="step-badge mb-4">Q{current + 1}</div>
@@ -554,13 +572,13 @@ export default function TechQuiz() {
               </button>
             ) : (
               <button onClick={() => {
-                if (current < questions.length - 1) {
+                if (current < shuffled.length - 1) {
                   setCurrent(current + 1); setSelected(answers[current + 1]); setAnswered(answers[current + 1] !== null);
                 } else { setView("result"); }
               }}
                 className="flex-1 inline-flex items-center justify-center gap-2 py-3 text-white font-bold rounded text-sm uppercase tracking-wide"
                 style={{ background: "#e7711b", fontFamily: "Barlow Condensed, sans-serif" }}>
-                {current < questions.length - 1 ? "Next Question" : "See Results"}
+                {current < shuffled.length - 1 ? "Next Question" : "See Results"}
                 <ArrowRight className="w-4 h-4" />
               </button>
             )}
